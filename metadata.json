@@ -1,0 +1,6 @@
+{
+  "name": "PDF to Podcast",
+  "description": "An application to convert PDF documents into podcast episodes with text-to-speech, and provides an RSS feed for easy listening.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
