@@ -39,6 +39,7 @@ Deploy this app to your favorite platform with one click:
 </p>
 
 **Docker:**  
+
 ```sh
 docker run -d -p 3000:3000 -e GEMINI_API_KEY=your_key ghcr.io/knoksen/pdf-to-podcast:latest
 ```
@@ -47,6 +48,7 @@ docker run -d -p 3000:3000 -e GEMINI_API_KEY=your_key ghcr.io/knoksen/pdf-to-pod
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/knoksen/pdf-to-podcast)
 
 **Fly.io:**  
+
 ```sh
 fly launch --image ghcr.io/knoksen/pdf-to-podcast:latest
 ```
@@ -98,10 +100,12 @@ GEMINI_API_KEY=your_gemini_api_key
 ## 🧑‍💻 Local Development
 
 **Prerequisites:**  
+
 - Node.js 18+
 - npm
 
 **Steps:**
+
 ```sh
 git clone https://github.com/knoksen/pdf-to-podcast.git
 cd pdf-to-podcast
@@ -109,6 +113,7 @@ cp .env.local.example .env.local # then edit the file
 npm install
 npm run dev
 ```
+
 Visit [http://localhost:3000](http://localhost:3000)
 
 ---
@@ -175,3 +180,23 @@ PRs and issues welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 ## 🗣️ Questions?
 
 Open an [issue](https://github.com/knoksen/pdf-to-podcast/issues) or start a [discussion](https://github.com/knoksen/pdf-to-podcast/discussions).
+
+---
+
+## 🖥️ Build a Windows EXE
+
+This repo now includes a minimal Electron wrapper and electron-builder configuration to create a Windows executable (NSIS installer).
+
+Prerequisites:
+
+- Node.js 18+ and npm
+- On Windows: make sure you have the required build tools for native modules (optional)
+
+Quick steps (Windows cmd.exe):
+
+```cmd
+npm install
+npm run electron:build
+```
+
+Artifacts will be written to the `release` directory.
