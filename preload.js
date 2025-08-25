@@ -1,5 +1,5 @@
-import { contextBridge } from 'electron';
+const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('appInfo', {
-  version: process.env.npm_package_version || '0.0.0'
+contextBridge.exposeInMainWorld('electronAPI', {
+	getVersion: () => ipcRenderer.invoke('app:getVersion'),
 });

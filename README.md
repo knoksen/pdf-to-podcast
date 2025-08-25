@@ -165,6 +165,39 @@ PRs and issues welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ---
 
+## 🪟 Build a Windows .exe (Electron)
+
+This project can be packaged as a desktop app using Electron.
+
+Prerequisites:
+- Windows 10/11
+- Node.js 18+
+
+Steps:
+1. Install dependencies
+  ```cmd
+  npm install
+  ```
+2. Build the web assets
+  ```cmd
+  npm run build
+  ```
+3. Package the Electron app for Windows (.exe)
+  ```cmd
+  npm run electron:build
+  ```
+
+For development with live reload:
+```cmd
+npm run electron:dev
+```
+
+Notes:
+- Set API_BASE_URL in a .env file if your backend runs at a custom URL.
+- The builder config outputs an NSIS installer under the dist/ directory.
+
+---
+
 ## 📄 License
 
 [MIT](LICENSE)
@@ -180,23 +213,3 @@ PRs and issues welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 ## 🗣️ Questions?
 
 Open an [issue](https://github.com/knoksen/pdf-to-podcast/issues) or start a [discussion](https://github.com/knoksen/pdf-to-podcast/discussions).
-
----
-
-## 🖥️ Build a Windows EXE
-
-This repo now includes a minimal Electron wrapper and electron-builder configuration to create a Windows executable (NSIS installer).
-
-Prerequisites:
-
-- Node.js 18+ and npm
-- On Windows: make sure you have the required build tools for native modules (optional)
-
-Quick steps (Windows cmd.exe):
-
-```cmd
-npm install
-npm run electron:build
-```
-
-Artifacts will be written to the `release` directory.

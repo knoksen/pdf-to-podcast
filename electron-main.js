@@ -1,39 +1,42 @@
-import { app, BrowserWindow } from 'electron';
-import path from 'path';
-import isDev from 'electron-is-dev';
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
 
-let mainWindow;
+const isDev = !!process.env.VITE_DEV_SERVER_URL;
 
 function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    webPreferences: {
-      preload: path.join(app.getAppPath(), 'preload.js'),
-      contextIsolation: true,
-      nodeIntegration: false,
-    },
-  });
+	const win = new BrowserWindow({
+		width: 1200,
+		height: 800,
+		webPreferences: {
+			preload: path.join(__dirname, 'preload.js'),
+			contextIsolation: true,
+			nodeIntegration: false,
+		},
+		show: false,
+	});
 
-  if (isDev) {
-    const url = 'http://localhost:5173';
-    mainWindow.loadURL(url).catch((e) => console.error(e));
-  } else {
-    const indexHtml = `file://${path.join(app.getAppPath(), 'dist', 'index.html')}`;
-    mainWindow.loadURL(indexHtml).catch((e) => console.error(e));
-  }
+	win.on('ready-to-show', () => win.show());
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+	if (isDev) {
+		win.loadURL(process.env.VITE_DEV_SERVER_URL);
+		win.webContents.openDevTools({ mode: 'detach' });
+	} else {
+		// Load built index.html served by Vite build
+		win.loadFile(path.join(__dirname, 'dist', 'index.html'));
+	}
 }
 
-app.on('ready', createWindow);
+app.whenReady().then(() => {
+	createWindow();
+
+	app.on('activate', () => {
+		if (BrowserWindow.getAllWindows().length === 0) createWindow();
+	});
+});
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+	if (process.platform !== 'darwin') app.quit();
 });
 
-app.on('activate', () => {
-  if (mainWindow === null) createWindow();
-});
+// Example: provide app version via IPC if needed
+ipcMain.handle('app:getVersion', () => app.getVersion());
